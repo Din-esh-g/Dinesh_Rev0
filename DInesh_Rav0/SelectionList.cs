@@ -157,12 +157,14 @@ namespace DInesh_Rav0
                     double rate = 0.00;
                     double balance = 0.00;
                     int period = 0;
-                    DateTime dateAndTime = DateTime.Now;
+                    DateTime dateAndTime;
                     // DateTime? period = null;
                     if (type == "1")
                     {
                         type = "Checking";
                         rate = 0.00;
+                        dateAndTime = DateTime.Now;
+
                         IAccount accountNew = new Checking()
                         {
                             type = type,
@@ -186,6 +188,7 @@ namespace DInesh_Rav0
                     {
                         type = "Business";
                         rate = 1.99;
+                        dateAndTime = DateTime.Now;
                         IAccount accountNew = new Business()
                         {
                             type = type,
@@ -204,7 +207,7 @@ namespace DInesh_Rav0
                     else if (type == "3")
                     {
                         type = "Term";
-                        rate = 3.0;
+                        rate = 4.0;
                         dateAndTime = DateTime.Now;
                         Console.WriteLine("\n Please Enter the period for your CD ?\n ");
                         Console.Write("\n Month   :=> ");
@@ -237,6 +240,7 @@ namespace DInesh_Rav0
                     {
                         type = "Loan";
                         rate = 6.99;
+                        dateAndTime = DateTime.Now;
                         Console.Write("The Loan Amount: $");
 
                         balance = 0 - Convert.ToInt32(Console.ReadLine());
@@ -284,6 +288,8 @@ namespace DInesh_Rav0
                         displaySelection();
                     }
 
+                    //chking types here
+                    var toAccountTypeofMainAccount = ListEnums.AccountList[accountIndex].type;
 
                     Console.Write("\nWhat type of transaction would you like to make? \n \n"
                                     + "1. Withdrawl \n"
@@ -303,7 +309,7 @@ namespace DInesh_Rav0
                     if (transType == "1")
                     {
                     
-                        Console.WriteLine("Withdraw Amount: => $");
+                        Console.Write("Withdraw Amount: => $ ");
                          double amt = validAmtInput();
                        
                        var accountType = ListEnums.AccountList[accountIndex].type;
@@ -396,26 +402,31 @@ namespace DInesh_Rav0
                     else if (transType == "3")
                     {
 
-                        Console.WriteLine("Enter the account number of the account you would like to transfer money to.");
-                        int toAccount = validAccountNumber();
-                        if (!SelectionList.accountIdValidation(toAccount))
-                        {
-                            Console.WriteLine("There is no account under that number.");
-                            Console.WriteLine("Please press Enter to return to the main menu");
-                            Console.ReadLine();
+                        Console.Write("In which Account would like to transfer: ");
+                        // int toAccount = validAccountNumber();
+                        int toAccount =Convert.ToInt32( Console.ReadLine());
 
-                            SelectionList.selectionList();
-                        }
+                        //if (!SelectionList.accountIdValidation(toAccount))
+                        //{
+                        //    Console.WriteLine("There is no account under that number.");
+                        //    Console.WriteLine("Please press Enter to return to the main menu");
+                        //    Console.ReadLine();
+
+                        //    SelectionList.selectionList();
+                        //}
+                        //Check the account Number in 
                         int toAccountIndex = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(toAccount));
 
+                      
+                       var toAccountType = ListEnums.AccountList[toAccountIndex].type;
+                        Console.WriteLine("Checking the Types: " + toAccountType);
 
-                        var toAccountType = ListEnums.AccountList[toAccount].type;
+                        
 
-                         var accountType = ListEnums.AccountList[accountIndex].type;
-
-                        Console.WriteLine("Transfer Amount ?");
+                        Console.Write("\nTransfer Amount : => $ \n");
                         double amount = validAmtInput();
-                        if (accountType == "Checking")
+
+                        if (toAccountTypeofMainAccount == "Checking")
                         {
                             Checking accountNew = new Checking();
                             accountNew = (Checking)ListEnums.AccountList[accountIndex];
@@ -436,14 +447,21 @@ namespace DInesh_Rav0
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
+                            else if (toAccountType == "Loan")
+                            {
+                                Loan toAccountNew = new Loan();
+                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                Console.WriteLine(toAccountNew.deposit(amount));
+                                SelectionList.selectionList();
+                            }
                             else
                             {
-                                Console.WriteLine("You can only trasfer between Checking and Buisness accounts. ");
+                                Console.WriteLine("You can only trasfer between Checking ,Buisness accounts, and Loan. ");
                                 SelectionList.selectionList();
                             }
 
                         }
-                        else if (accountType == "Business")
+                        else if (toAccountTypeofMainAccount == "Business")
                         {
                             Business accountNew = new Business();
                             accountNew = (Business)ListEnums.AccountList[accountIndex];
@@ -463,10 +481,105 @@ namespace DInesh_Rav0
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
+                            else if (toAccountType == "Loan")
+                            {
+                                Loan toAccountNew = new Loan();
+                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                Console.WriteLine(toAccountNew.deposit(amount));
+                                SelectionList.selectionList();
+                            }
                             else
                             {
-                                Console.WriteLine("You can only trasfer between Checking and Buisness accounts. ");
+                                Console.WriteLine("You can only trasfer between Checking, Buisness, and Loan accounts. ");
                                 SelectionList.selectionList();
+                            }
+
+                        }
+                        //Transfer From Loan
+                        else if (toAccountTypeofMainAccount == "Loan")
+                        {
+                            Loan accountNew = new Loan();
+                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            Console.WriteLine(accountNew.withdraw(amount));
+
+                            if (toAccountType == "Checking")
+                            {
+                                Checking toAccountNew = new Checking();
+                                toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                Console.WriteLine(toAccountNew.deposit(amount));
+                                SelectionList.selectionList();
+                            }
+                            else if (toAccountType == "Business")
+                            {
+                                Business toAccountNew = new Business();
+                                toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                Console.WriteLine(toAccountNew.deposit(amount));
+                                SelectionList.selectionList();
+                            }
+                            else if (toAccountType == "Loan")
+                            {
+                                Loan toAccountNew = new Loan();
+                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                Console.WriteLine(toAccountNew.deposit(amount));
+                                SelectionList.selectionList();
+                            }
+                            else
+                            {
+                                Console.WriteLine("You can only trasfer between Checking, Buisness, and Loan accounts. ");
+                                SelectionList.selectionList();
+                            }
+
+                        }
+
+
+                        //Transfer from CD
+
+                        else if (toAccountTypeofMainAccount == "Term")
+                        {
+                            //chek the maturity date here
+
+                            foreach (IAccount item in ListEnums.AccountList)
+                            {
+
+                                if ((MonthDifference(DateTime.Now, item.dateAndTime) > item.period))
+                                {
+
+                                    TermDeposit accountNew = new TermDeposit();
+                                    accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                                    Console.WriteLine(accountNew.withdraw(amount));
+
+                                    if (toAccountType == "Checking")
+                                    {
+                                        Checking toAccountNew = new Checking();
+                                        toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                        Console.WriteLine(toAccountNew.deposit(amount));
+                                        SelectionList.selectionList();
+                                    }
+                                    else if (toAccountType == "Business")
+                                    {
+                                        Business toAccountNew = new Business();
+                                        toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                        Console.WriteLine(toAccountNew.deposit(amount));
+                                        SelectionList.selectionList();
+                                    }
+                                    else if (toAccountType == "Loan")
+                                    {
+                                        Loan toAccountNew = new Loan();
+                                        toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                        Console.WriteLine(toAccountNew.deposit(amount));
+                                        SelectionList.selectionList();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("You can only trasfer between Checking, Buisness, and Loan accounts. ");
+                                        SelectionList.selectionList();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nYour CD is not mature yet. \n\n ");
+                                    SelectionList.selectionList();
+                                }
                             }
 
                         }
@@ -720,7 +833,7 @@ namespace DInesh_Rav0
                 try
                 {
                     int accountId = Convert.ToInt32(Console.ReadLine());
-                    if (!SelectionList.validAccountNumber(accountId))
+                    if (!SelectionList.validAccountNumbers(accountId))
                     {
                         Console.WriteLine("\n\n *************No Account Found***********\n.");
                         Console.WriteLine("Please press enter to return to the main menu");
@@ -813,7 +926,7 @@ namespace DInesh_Rav0
             /// </summary>
             /// <param name="toAccount"></param>
             /// <returns></returns>
-            private static bool validAccountNumber(int toAccount)
+            private static bool validAccountNumbers(int toAccount)
             {
                 bool found = false;
 
@@ -893,11 +1006,31 @@ namespace DInesh_Rav0
             /// </summary>
             /// <param name="emailToValidate"></param>
             /// <returns></returns>
-             static bool IsEmailSyntaxValid(string emailToValidate)
+            public  static bool IsEmailSyntaxValid(string emailToValidate)
             {
                 return System.Text.RegularExpressions.Regex.IsMatch(emailToValidate,
                     @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
             }
+       public  static double interestCalulation()
+        {
+            double interest = 0;
+             foreach (IAccount item in ListEnums.AccountList)
+                {
+
+                interest = item.Balance * item.InterestRate * item.period;
+            }
+            return interest;
+        }
+        public static double interestForOtherAccount()
+        {
+            double interest = 0;
+            foreach (IAccount item in ListEnums.AccountList)
+            {
+                interest = (item.Balance * (MonthDifference(DateTime.Now,item.dateAndTime)/12) * item.InterestRate) / 100;
+            }
+            return interest;
+        }
+            
 
 
             #endregion
