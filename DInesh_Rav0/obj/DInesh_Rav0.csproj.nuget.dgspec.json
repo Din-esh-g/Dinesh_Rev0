@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\dines\\source\\repos\\DInesh_Rav0\\DInesh_Rav0\\DInesh_Rav0.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\dines\\source\\repos\\DInesh_Rav0\\DInesh_Rav0\\DInesh_Rav0.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\dines\\source\\repos\\DInesh_Rav0\\DInesh_Rav0\\DInesh_Rav0.csproj",
+        "projectName": "DInesh_Rav0",
+        "projectPath": "C:\\Users\\dines\\source\\repos\\DInesh_Rav0\\DInesh_Rav0\\DInesh_Rav0.csproj",
+        "packagesPath": "C:\\Users\\dines\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dines\\source\\repos\\DInesh_Rav0\\DInesh_Rav0\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\dines\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Twilio": {
+              "target": "Package",
+              "version": "[5.34.0, )"
+            },
+            "libphonenumber-csharp": {
+              "target": "Package",
+              "version": "[8.10.21, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
