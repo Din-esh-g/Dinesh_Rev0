@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Twilio.Types;
+using ConsoleTables;
 
 namespace DInesh_Rav0
 {
@@ -45,10 +46,10 @@ namespace DInesh_Rav0
         #region New User Registration
         public static void userRegistration()
         {
-
+            Console.WriteLine("==================================================\n");
             Console.WriteLine("\n\nWelcome to Registration Page:\n ");
-            Console.WriteLine("====================================\n");
-            Console.Write("Please enter your First Name: \t\t\t");
+            Console.WriteLine("===================================================\n");
+            Console.Write("Please enter your First Name: \t\t\t=>");
             string fname = Console.ReadLine();
             while (string.IsNullOrEmpty(fname) )
             {
@@ -56,7 +57,7 @@ namespace DInesh_Rav0
                 fname = Console.ReadLine();
             }
 
-            Console.Write("Please enter your Last Name: \t\t\t");
+            Console.Write("Please enter your Last Name: \t\t\t =>");
             string lname = Console.ReadLine();
             while (string.IsNullOrEmpty(lname))
             {
@@ -64,7 +65,7 @@ namespace DInesh_Rav0
                 lname = Console.ReadLine();
             }
 
-            Console.Write("Please enter your Email Address: \t\t");
+            Console.Write("Please enter your Email Address: \t\t=>");
             string email = SelectionList.validEmail();
             while (string.IsNullOrEmpty(email))
             {
@@ -72,12 +73,12 @@ namespace DInesh_Rav0
                 email = Console.ReadLine();
             }
 
-            Console.Write("Please enter your Phone Number (Without Area Code and Space: 123456789) : ");
+            Console.Write("Please enter your Phone Number (Without Area Code and Space: 123456789) :=>");
 
             //long phone = long.Parse(Console.ReadLine());
             long phone = validPhone();
                        
-            Console.Write("Please enter your Mailing Address:  \t");
+            Console.Write("Please enter your Mailing Address:     \t=>");
             string address = Console.ReadLine();
 
             while (string.IsNullOrEmpty(address))
@@ -97,8 +98,13 @@ namespace DInesh_Rav0
             };
             ListEnums.custNumber++;
             NewUser newUser = new NewUser();
-            Console.WriteLine(newUser.Create(customerNew));
-            selectionList();
+            newUser.Create(customerNew);
+           // Console.WriteLine(newUser.Create(customerNew));
+          
+                Console.WriteLine("Please press enter to continue ........");
+                Console.ReadLine();
+                
+          selectionList();
 
         }
         #endregion
@@ -112,6 +118,7 @@ namespace DInesh_Rav0
                                     + "2. Open New Account. \n"
                                     + "3. Transaction \n"
                                     + "4. View Account \n"
+                                    + "5. Close the Application \n"
                                     );
 
             Console.Write("\n Enter selection: => ");
@@ -179,7 +186,7 @@ namespace DInesh_Rav0
                         ListEnums.accntNumberChk++;
 
                         NewAccount newAcc = new NewAccount();
-                        Console.WriteLine(newAcc.CreateAccount(accountNew));
+                        newAcc.CreateAccount(accountNew);
 
 
 
@@ -202,7 +209,7 @@ namespace DInesh_Rav0
                         ListEnums.accntNumberBs++;
 
                         NewAccount newBusinessAcc = new NewAccount();
-                        Console.WriteLine(newBusinessAcc.CreateAccount(accountNew));
+                        newBusinessAcc.CreateAccount(accountNew);
                     }
                     else if (type == "3")
                     {
@@ -234,7 +241,9 @@ namespace DInesh_Rav0
                         ListEnums.accntNumberCD++;
 
                         NewAccount newTermAccount = new NewAccount();                        
-                        Console.WriteLine(newTermAccount.CreateAccountTerm(newTerm));
+                        newTermAccount.CreateAccountTerm(newTerm);
+
+
                     }
                     else if (type == "4")
                     {
@@ -259,7 +268,7 @@ namespace DInesh_Rav0
                         ListEnums.accntNumberLn++;
 
                         NewAccount accountBL = new NewAccount();
-                        Console.WriteLine(accountBL.CreateAccount(newLoan));
+                        accountBL.CreateAccount(newLoan);
                     }
                     else
                     {
@@ -302,7 +311,7 @@ namespace DInesh_Rav0
                                     + "Enter selection: ");
 
 
-                    Console.Write("\n Your Selection  : => ");
+                    Console.Write("\nYour Selection  : => ");
 
                     string transType = Console.ReadLine();
 
@@ -403,18 +412,9 @@ namespace DInesh_Rav0
                     {
 
                         Console.Write("In which Account would like to transfer: ");
-                        // int toAccount = validAccountNumber();
-                        int toAccount =Convert.ToInt32( Console.ReadLine());
+                         int toAccount = validAccountNumber();
+                       // int toAccount =Convert.ToInt32( Console.ReadLine());
 
-                        //if (!SelectionList.accountIdValidation(toAccount))
-                        //{
-                        //    Console.WriteLine("There is no account under that number.");
-                        //    Console.WriteLine("Please press Enter to return to the main menu");
-                        //    Console.ReadLine();
-
-                        //    SelectionList.selectionList();
-                        //}
-                        //Check the account Number in 
                         int toAccountIndex = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(toAccount));
 
                       
@@ -594,8 +594,8 @@ namespace DInesh_Rav0
                     else if (transType == "4")
                     {
 
-                        var yourBalance = ListEnums.AccountList[accountIndex].Balance;
-                        Console.WriteLine($"Your account balance is ${yourBalance}");
+                        var currentBalance = ListEnums.AccountList[accountIndex].Balance;
+                        Console.WriteLine($"Your account balance is:  $ {currentBalance}");
                         SelectionList.selectionList();
 
                     }
@@ -686,20 +686,32 @@ namespace DInesh_Rav0
                     }
                     else
                     {
-                        Console.WriteLine("The customer Id you provided is associated with the following accounts...");
+                        Console.WriteLine("The Id  has following accounts...");
                         foreach (IAccount item in ListEnums.AccountList)
                         {
                             if (item.CustomerId == CustId)
                             {
-                                Console.WriteLine($" Account Types: {item.type} || Balance:  ${item.Balance} || Account Number:  {item.accountNumber}");
+
+                                Console.WriteLine("\n " + item.type +" Account: \n");
+                                var table = new ConsoleTable("Account Number", "Types","Balance ",  "Date");
+                                table.AddRow(item.accountNumber, item.type, item.Balance, item.dateAndTime);
+                                table.Write();
+
+                           
                             }
                         }
                         displaySelection();
                     }
+                    
 
+                    break;
+                case "5":
+                    Console.WriteLine(  " \n\n\n Thank you For Using ! .......................\n");
+                    Environment.Exit(0);
 
                     break;
                 default:
+
                     notAvilable();
                     break;
             }

@@ -41,6 +41,14 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "ConsoleTables": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
             "Twilio": {
               "target": "Package",
               "version": "[5.34.0, )"

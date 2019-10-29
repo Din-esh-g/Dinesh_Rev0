@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
-//using ConsoleTables;
+using ConsoleTables;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace DInesh_Rav0
 {
     public class NewUser
     {
-        public string Create(RegisterUser newCustomer)
+        public void Create(RegisterUser newCustomer)
         {
-            string custInfo = $"\n\nThank you for Registration {newCustomer.firstName} {newCustomer.lastName}. You Have Following Registration Details .\nYour Registration ID:  {newCustomer.Id} || Email Id: {newCustomer.email} || Phone Number: {newCustomer.phoneNumber} || Address: {newCustomer.address}";
-            ListEnums.CustomerList.Add(newCustomer);                        
-            return custInfo;
+            ListEnums.CustomerList.Add(newCustomer);
+            Console.WriteLine($"\n\nConguralation !!!\n\n Following information is saved for {newCustomer.firstName}.\n");
+            var table = new ConsoleTable("First Name", "Last Name", "User ID", "Email Address", "Phone ", "Address");
+            table.AddRow(newCustomer.firstName, newCustomer.lastName, newCustomer.Id, newCustomer.email, newCustomer.phoneNumber, newCustomer.address);
+            table.Write();
+
+    
 
         }
-        //public static void table()
-        //{
-        //    var table = new ConsoleTable ("First Name", "Last Name", "Email", "PhoneNumbers", "CustomerId");
-
-        //    table.AddRow(newCustomer.firstName, newCustomer.lastName, newCustomer.email, newCustomer.phoneNumber, newCustomer.Id);
-        //    table.Write();
-        //}
+        
 
     }
 }

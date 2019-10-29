@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleTables;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,29 +7,31 @@ namespace DInesh_Rav0
 {
    public class NewAccount
     {
-        public string CreateAccount(IAccount accountNew)
+        public void CreateAccount(IAccount accountNew)
 
         {
+            Console.WriteLine("\n\nCongratulation !!!\n\n Following is details of your new Account: \n \n");
+            ListEnums.AccountList.Add(accountNew);           
+            var table = new ConsoleTable("Account Number", "Balance ", "Interest Rate","Types", "Status", "Date");
+            table.AddRow(accountNew.accountNumber,  "$ "+accountNew.Balance, accountNew.InterestRate +"%", accountNew.type, accountNew.status, accountNew.dateAndTime);
+            table.Write();
 
-            string accntInfo = $"\n\nCongratulations you have created a new {accountNew.type} account.\n";
-            accntInfo += $"Your new account number :  {accountNew.accountNumber}. ||";
-            accntInfo += $"Account Balance: $ {accountNew.Balance} ||Interest Rate:  {accountNew.InterestRate}% || Satatus : { accountNew.status}  Date: {DateTime.Now}";
-            ListEnums.AccountList.Add(accountNew);
-
-            return accntInfo;
+           
         }
 
-        public string CreateAccountTerm(IAccount accountNew)
+        public void CreateAccountTerm(IAccount accountNew)
 
         {
-
-            string accntInfo = $"\n\nCongratulations you have created a new {accountNew.type} account with Following details: \n" ;
-            accntInfo += $"Account Number:  {accountNew.accountNumber}. ||";
-            accntInfo += $"Balance : $  {accountNew.Balance} || Interest Rate:  {accountNew.InterestRate} %|| Duration: {accountNew.period} Month|| Satatus : {accountNew.status}  Date: {DateTime.Now} ";
+            Console.WriteLine("\n\nCongratulation !!!\n\n Following is details of your new Account: \n \n");
             ListEnums.AccountList.Add(accountNew);
+            var table = new ConsoleTable("Account Number", "Balance ", "Interest Rate", "Period","Types", "Status", "Date");
+            table.AddRow(accountNew.accountNumber, "$ " + accountNew.Balance, accountNew.InterestRate +" %", accountNew.period +" Month",accountNew.type, accountNew.status, accountNew.dateAndTime);
+            table.Write();
 
-            return accntInfo;
+
         }
+
+
 
     }
 

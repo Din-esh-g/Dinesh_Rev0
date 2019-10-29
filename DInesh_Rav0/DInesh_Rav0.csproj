@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ConsoleTables" Version="2.3.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.1" />
     <PackageReference Include="libphonenumber-csharp" Version="8.10.21" />
     <PackageReference Include="Twilio" Version="5.34.0" />
   </ItemGroup>

@@ -17,6 +17,7 @@ namespace DInesh_Rav0
         public static List<RegisterUser> CustomerList = new List<RegisterUser>();
 
         public static List<IAccount> AccountList = new List<IAccount>();
+       
 
         public enum accountType
         {

@@ -30,15 +30,15 @@ namespace DInesh_Rav0
                 this.Balance = this.Balance - amount;
                 Activities transactionNew = new Activities()
                 {
-                    info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}."
+                    info = $"$Withdraw Amt:  {amount}  || Date: {DateTime.Now} || Current Balance:  ${this.Balance}."
                 };
                 this.addTransaction(transactionNew);
 
-                return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+                return $"Withdraw Amt: \t ${amount}|| Account Number: \t {this.accountNumber}. New Balance: \t ${this.Balance}.";
             }
             else
             {
-                return $"You can not withdrawl ${amount} because you only have ${this.Balance} in you account.";
+                return $"You can not withdrawl ${amount} because you dont have sufficent funds. Your have $ {this.Balance} in you account.";
             }
 
         }
@@ -49,12 +49,12 @@ namespace DInesh_Rav0
             this.Balance = this.Balance + amount;
             Activities transactionNew = new Activities()
             {
-                info = $"${amount} has been deposited at {DateTime.Now} balance is now ${this.Balance}."
+                info = $" \nDeposied Amount: ${amount} || Date:  {DateTime.Now} || Current Balance: $ {this.Balance}."
             };
             this.addTransaction(transactionNew);
 
 
-            return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+            return $" \nDeposied Amount: ${amount} || Date:  {DateTime.Now} || Current Balance: $ {this.Balance}.";
 
         }
 
