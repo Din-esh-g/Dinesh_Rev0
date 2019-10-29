@@ -53,6 +53,29 @@ namespace DInesh_Rav0
             return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
         }
 
+        public string intrest(DateTime date)
+
+        {
+            date = DateTime.Now;
+            if (this.status == true)
+            {
+                double interestAmt = (this.Balance * (Validation.MonthDifference(date, this.dateAndTime)) * this.InterestRate);
+                this.Balance = this.Balance + (this.Balance * (Validation.MonthDifference(DateTime.Now, this.dateAndTime)*30) * (this.InterestRate/(365*100)));
+                Activities transactionNew = new Activities()
+                {
+                    info = $" Your Accured $ {interestAmt} has been added at {DateTime.Now} balance is now $ {this.Balance} in your  {this.type} account. "
+                };
+                this.addTransaction(transactionNew);
+
+                return $" Your Accured $ {interestAmt} has been added at {DateTime.Now} balance is now $ {this.Balance} in your  {this.type} account. ";
+        }
+            else
+            {
+                return $"There is no interest for Dormant account. ";
+            }
+
+        }
+
 
         public List<Activities> getLog()
         {

@@ -23,6 +23,7 @@ namespace DInesh_Rav0
         string withdraw(double amount);
 
         string deposit(double amount);
+        string intrest(DateTime date);
 
 
 
