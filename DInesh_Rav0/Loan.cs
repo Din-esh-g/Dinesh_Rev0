@@ -38,20 +38,22 @@ namespace DInesh_Rav0
         /// <returns>newBalance </returns>
         public string withdraw(double amount)
         {
-            if (this.Balance > amount)
+            //The balance is in negative so. when we add negative negative the balance will of loan will be increase.  
+            if (this.Balance > amount)//Not necessary to chek because 
             {
                 this.Balance = this.Balance - amount;
+                //
                 Activities transactionNew = new Activities()
                 {
-                    info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}."
+                    info = $"$ WithDraw AMt : {amount}  at {DateTime.Now} balance is now ${this.Balance}."
                 };
                 this.addTransaction(transactionNew);
 
-                return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+                return $"WithDraw AMt ${amount} from Account Number:  {this.accountNumber}. Your balance is now ${this.Balance}.";
             }
             else
             {
-                return $"You can not withdrawl ${amount} because you only have ${this.Balance} in you account.";
+                return $" Unsufficent Fund: \n You can not withdrawl ${amount} because you only have ${this.Balance} in you account.";
             }
 
         }

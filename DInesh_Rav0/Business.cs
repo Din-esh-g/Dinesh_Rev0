@@ -39,16 +39,18 @@ namespace DInesh_Rav0
         /// <returns>new balnce </returns>
         public string withdraw(double amount)
         {
-            if (this.Balance + 5000 > amount)
+            if (this.Balance + 5000 > amount)//Hard coded 5000
             {
+                //Cheecking this.Balance -=amount;
                 this.Balance = this.Balance - amount;
+                //This will be the new Activities Activites has info  will String get and set 
                 Activities transactionNew = new Activities()
                 {
-                    info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}. (Note: You have $5000 Credit Limits.)"
+                    info = $"$ WithDraw AMt : {amount}  at {DateTime.Now} balance is now ${this.Balance}."
                 };
                 this.addTransaction(transactionNew);
 
-                return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}. (Note: You have $5000 Credit Limits.)";
+                return $"WithDraw AMt ${amount} from Account Number:  {this.accountNumber}. Your balance is now ${this.Balance}."; return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}. (Note: You have $5000 Credit Limits.)";
             }
             else
             {
@@ -65,6 +67,7 @@ namespace DInesh_Rav0
         public string deposit(double amount)
         {
 
+
             this.Balance = this.Balance + amount;
             Activities transactionNew = new Activities()
             {
@@ -73,7 +76,7 @@ namespace DInesh_Rav0
             this.addTransaction(transactionNew);
 
 
-            return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+            return $"You have deposited:  $ {amount}  into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
 
         }
         /// <summary>
@@ -83,7 +86,7 @@ namespace DInesh_Rav0
         /// <returns>New Balnce with after interest added. </returns>
         public string intrest(DateTime date)
         {
-            if (this.status == true)
+            if (this.status == true)// Checking the status
             {
                  date = DateTime.Now;
                 double interestAmt = (this.Balance * (Validation.MonthDifference(date, this.dateAndTime)) * this.InterestRate);
@@ -104,7 +107,7 @@ namespace DInesh_Rav0
         }
 
 
-        //This is the create log. 
+        //This is the create log. Which we passed as a info will loged here then we can retrived later
 
         public List<Activities> getLog()
         {

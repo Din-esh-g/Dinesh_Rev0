@@ -102,7 +102,7 @@ namespace DInesh_Rav0
 
         }
 
-        //This will getlog
+        //This will getlog 
         public List<Activities> getLog()
         {
             return this.transactionList;

@@ -21,14 +21,14 @@ namespace DInesh_Rav0
 
 
             Console.WriteLine("\tc - Do you want to continue with Registration ");
-            Console.WriteLine("\te - Already have Registered User ID. ");
+            Console.WriteLine("\ta - Already have Registered User ID. ");
             Console.WriteLine("\te - Exit from application. ");
-            
+
 
             Console.Write("Your option? : => ");
             string optiono = Console.ReadLine();
 
-            while (string.IsNullOrEmpty(optiono) && (!(optiono == "c") || !(optiono == "e")))
+            while (string.IsNullOrEmpty(optiono) && (!(optiono == "c") || !(optiono == "e") || !(optiono == "a")))
             {
                 Console.WriteLine("Your Selection can't be empty! Input your selection once more");
                 optiono = Console.ReadLine();
@@ -37,7 +37,7 @@ namespace DInesh_Rav0
             {
                 userRegistration();
             }
-            else if (optiono == "e")
+            else if (optiono == "a")
             {
                 selectionList();
 
@@ -65,7 +65,7 @@ namespace DInesh_Rav0
             Console.WriteLine("===================================================\n");
             Console.Write("Please enter your First Name: \t\t\t=>");
             string fname = Console.ReadLine();
-            while (string.IsNullOrEmpty(fname) )
+            while (string.IsNullOrEmpty(fname))
             {
                 Console.WriteLine("Umm It's Look Empty First name. Please Enter again : ");
                 fname = Console.ReadLine();
@@ -91,7 +91,7 @@ namespace DInesh_Rav0
 
             //long phone = long.Parse(Console.ReadLine());
             long phone = Validation.validPhone();
-                       
+
             Console.Write("Please enter your Mailing Address:     \t=>");
             string address = Console.ReadLine();
 
@@ -113,12 +113,12 @@ namespace DInesh_Rav0
             ListEnums.custNumber++;
             NewUser newUser = new NewUser();
             newUser.Create(customerNew);
-           // Console.WriteLine(newUser.Create(customerNew));
-          
-                Console.WriteLine("Please press enter to continue ........");
-                Console.ReadLine();
-                
-          selectionList();
+            // Console.WriteLine(newUser.Create(customerNew));
+
+            Console.WriteLine("Please press enter to continue ........");
+            Console.ReadLine();
+
+            selectionList();
 
         }
         #endregion
@@ -142,7 +142,7 @@ namespace DInesh_Rav0
             string userChoice = Console.ReadLine();
 
 
-            while (string.IsNullOrEmpty(userChoice) && (((userChoice == "1") || (userChoice == "2") || (userChoice == "3") || (userChoice == "4") )))
+            while (string.IsNullOrEmpty(userChoice) && (((userChoice == "1") || (userChoice == "2") || (userChoice == "3") || (userChoice == "4"))))
             {
                 Console.WriteLine("Your Selection can't be empty! Input your selection once more");
                 userChoice = Console.ReadLine();
@@ -158,8 +158,8 @@ namespace DInesh_Rav0
 
                     Console.WriteLine("\nPlease enter your Customer ID");
                     Console.Write("\n Your option? :=> ");
-                   // int custId = Convert.ToInt32(Console.ReadLine());
-                    int custId =Validation.validUserId();
+                    // int custId = Convert.ToInt32(Console.ReadLine());
+                    int custId = Validation.validUserId();
                     //Providing the Option to the valid userID
                     Console.Write("\nWhat type of account would you like to open? \n \n =============================\n"
 
@@ -343,15 +343,20 @@ namespace DInesh_Rav0
                     {
 
                         Console.WriteLine("Deposit Amount: ");
+                        //Cheking types
                         var accountType = ListEnums.AccountList[Index].type;
+                        // amt validation
                         double amount = Validation.validAmtInput();
 
                         //Deposit for Checking. 
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
+                            //Find the account
                             accountNew = (Checking)ListEnums.AccountList[Index];
+                            //Perform the action
                             Console.WriteLine(accountNew.deposit(amount));
+                            //back to main menu
                             Validation.displaySelection();
 
                         }
@@ -388,29 +393,35 @@ namespace DInesh_Rav0
                     //Withdrawl Part
                     else if (transType == "2")
                     {
-
+                        //Taking amt
                         Console.Write("Withdraw Amount: => $ ");
+                        //validate the amt
                         double amt = Validation.validAmtInput();
-
+                        //Taking the types 
                         var accountType = ListEnums.AccountList[Index].type;
 
                         //Withdrawl from checking 
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
+                            //Find the account first
                             accountNew = (Checking)ListEnums.AccountList[Index];
+                            //Action performed and dispaly the message 
                             Console.WriteLine(accountNew.withdraw(amt));
+                            //Back to the menue
                             Validation.displaySelection();
 
 
                         }
-                        
+
                         //Withdrawl from Business
 
                         else if (accountType == "Business")
                         {
                             Business accountNew = new Business();
+                            //Find the account first and
                             accountNew = (Business)ListEnums.AccountList[Index];
+                            // Withdraw is happend.
                             Console.WriteLine(accountNew.withdraw(amt));
                             Validation.displaySelection();
 
@@ -424,8 +435,9 @@ namespace DInesh_Rav0
                             //check the date
                             foreach (IAccount item in ListEnums.AccountList)
                             {
-
-                                if ((Validation.MonthDifference(DateTime.Now, item.dateAndTime) > item.period)) {
+                                //Maturity test
+                                if ((Validation.MonthDifference(DateTime.Now, item.dateAndTime) > item.period))
+                                {
 
                                     TermDeposit accountNew = new TermDeposit();
                                     accountNew = (TermDeposit)ListEnums.AccountList[Index];
@@ -450,20 +462,24 @@ namespace DInesh_Rav0
                         }
                     }
 
-                    
+
                     //This else if will work with Transfer. 
                     else if (transType == "3")
                     {
 
                         Console.Write("In which Account would like to transfer: ");
+
                         int toAccount = Validation.validAccountNumber();
-                        // int toAccount =Convert.ToInt32( Console.ReadLine());
+                        // int toAccount =Convert.ToInt32( Console.ReadLine());// Checking
+                        // to verify the account is exit i am looking serching the index.
+                        //toAccount is the passed account number 
 
-                        int toAccountIndex = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(toAccount));
+                        int IndexLocal = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(toAccount));
 
 
-                        var toAccountType = ListEnums.AccountList[toAccountIndex].type;
-                        Console.WriteLine("Checking the Types: " + toAccountType);
+                        var toAccountType = ListEnums.AccountList[IndexLocal].type;
+
+                        Console.WriteLine("Checking the Types: " + toAccountType);//Testing 
 
 
 
@@ -474,13 +490,15 @@ namespace DInesh_Rav0
                         if (toAccountTypeofMainAccount == "Checking")
                         {
                             Checking accountNew = new Checking();
+                            // now we are looking the account 
                             accountNew = (Checking)ListEnums.AccountList[Index];
+                            //founded then withdraw
                             Console.WriteLine(accountNew.withdraw(amount));
                             //checking
                             if (toAccountType == "Checking")
                             {
                                 Checking toAccountNew = new Checking();
-                                toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Checking)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
 
@@ -489,7 +507,7 @@ namespace DInesh_Rav0
                             else if (toAccountType == "Business")
                             {
                                 Business toAccountNew = new Business();
-                                toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Business)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -497,7 +515,7 @@ namespace DInesh_Rav0
                             else if (toAccountType == "Loan")
                             {
                                 Loan toAccountNew = new Loan();
-                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Loan)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -518,7 +536,7 @@ namespace DInesh_Rav0
                             if (toAccountType == "Checking")
                             {
                                 Checking toAccountNew = new Checking();
-                                toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Checking)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -526,7 +544,7 @@ namespace DInesh_Rav0
                             else if (toAccountType == "Business")
                             {
                                 Business toAccountNew = new Business();
-                                toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Business)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -534,7 +552,7 @@ namespace DInesh_Rav0
                             else if (toAccountType == "Loan")
                             {
                                 Loan toAccountNew = new Loan();
-                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Loan)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -555,21 +573,21 @@ namespace DInesh_Rav0
                             if (toAccountType == "Checking")
                             {
                                 Checking toAccountNew = new Checking();
-                                toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Checking)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
                             else if (toAccountType == "Business")
                             {
                                 Business toAccountNew = new Business();
-                                toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Business)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
                             else if (toAccountType == "Loan")
                             {
                                 Loan toAccountNew = new Loan();
-                                toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                toAccountNew = (Loan)ListEnums.AccountList[IndexLocal];
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
@@ -601,21 +619,21 @@ namespace DInesh_Rav0
                                     if (toAccountType == "Checking")
                                     {
                                         Checking toAccountNew = new Checking();
-                                        toAccountNew = (Checking)ListEnums.AccountList[toAccountIndex];
+                                        toAccountNew = (Checking)ListEnums.AccountList[IndexLocal];
                                         Console.WriteLine(toAccountNew.deposit(amount));
                                         SelectionList.selectionList();
                                     }
                                     else if (toAccountType == "Business")
                                     {
                                         Business toAccountNew = new Business();
-                                        toAccountNew = (Business)ListEnums.AccountList[toAccountIndex];
+                                        toAccountNew = (Business)ListEnums.AccountList[IndexLocal];
                                         Console.WriteLine(toAccountNew.deposit(amount));
                                         SelectionList.selectionList();
                                     }
                                     else if (toAccountType == "Loan")
                                     {
                                         Loan toAccountNew = new Loan();
-                                        toAccountNew = (Loan)ListEnums.AccountList[toAccountIndex];
+                                        toAccountNew = (Loan)ListEnums.AccountList[IndexLocal];
                                         Console.WriteLine(toAccountNew.deposit(amount));
                                         SelectionList.selectionList();
                                     }
@@ -728,7 +746,7 @@ namespace DInesh_Rav0
                         SelectionList.selectionList();
                     }
                     //Interest Look up is not 
-            
+
                     else if (transType == "8")
                     {
                         var accountType = ListEnums.AccountList[Index].type;
@@ -738,7 +756,7 @@ namespace DInesh_Rav0
                             Checking accountNew = new Checking();
                             accountNew = (Checking)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.intrest(DateTime.Now));
-                            
+
                             Validation.displaySelection();
 
 
@@ -748,7 +766,7 @@ namespace DInesh_Rav0
                             Business accountNew = new Business();
                             accountNew = (Business)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.intrest(DateTime.Now));
-                             Validation.displaySelection();
+                            Validation.displaySelection();
 
 
                         }
@@ -781,9 +799,9 @@ namespace DInesh_Rav0
                         }
                     }
 
-                                                                             
 
-                        break;
+
+                    break;
                 case "4":
 
                     Console.WriteLine("Please enter your customer ID");
@@ -801,21 +819,21 @@ namespace DInesh_Rav0
                             if (item.CustomerId == CustId)
                             {
 
-                                Console.WriteLine("\n " + item.type +" Account: \n");
-                                var table = new ConsoleTable("Account Number", "Types","Balance ",  "Date");
+                                Console.WriteLine("\n " + item.type + " Account: \n");
+                                var table = new ConsoleTable("Account Number", "Types", "Balance ", "Date");
                                 table.AddRow(item.accountNumber, item.type, item.Balance, item.dateAndTime);
                                 table.Write();
 
-                           
+
                             }
                         }
                         Validation.displaySelection();
                     }
-                    
+
                     //Exit From program
                     break;
                 case "5":
-                    Console.WriteLine(  " \n\n\n Thank you For Using ! .......................\n");
+                    Console.WriteLine(" \n\n\n Thank you For Using ! .......................\n");
                     Environment.Exit(0);
 
                     break;
@@ -832,7 +850,7 @@ namespace DInesh_Rav0
 
 
 
-        }
     }
+}
 
 

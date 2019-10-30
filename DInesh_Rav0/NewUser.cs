@@ -15,7 +15,9 @@ namespace DInesh_Rav0
         /// <param name="newCustomer"></param>
         public void Create(RegisterUser newCustomer)
         {
+            //Adding the new custmer in the Customer list
             ListEnums.CustomerList.Add(newCustomer);
+            //This will print out the message in Table form.
             Console.WriteLine($"\n\nConguralation !!!\n\n Following information is saved for {newCustomer.firstName}.\n");
             var table = new ConsoleTable("First Name", "Last Name", "User ID", "Email Address", "Phone ", "Address");
             table.AddRow(newCustomer.firstName, newCustomer.lastName, newCustomer.Id, newCustomer.email, newCustomer.phoneNumber, newCustomer.address);

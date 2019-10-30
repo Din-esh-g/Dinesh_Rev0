@@ -14,7 +14,6 @@ namespace DInesh_Rav0
         public int CustomerId { get; set; }
         public double InterestRate { get; set; }
         public double Balance { get; set; }
-
         public DateTime createdAt { get; set; }
         public bool status { get; set; }
         public int period { get; set; }
@@ -43,11 +42,11 @@ namespace DInesh_Rav0
             this.Balance = this.Balance - amount;
             Activities transactionNew = new Activities()
             {
-                info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}."
+                info = $"$ WithDraw AMt : {amount}  at {DateTime.Now} balance is now ${this.Balance}."
             };
             this.addTransaction(transactionNew);
 
-            return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+            return $"WithDraw AMt ${amount} from Account Number:  {this.accountNumber}. Your balance is now ${this.Balance}.";
 
         }
         /// <summary>
@@ -57,15 +56,17 @@ namespace DInesh_Rav0
         /// <returns>newBalnce after deposit</returns>
         public string deposit(double amount)
         {
-
+            //this will added back 
+           // this.Balance += amount;
             this.Balance = this.Balance + amount;
             Activities transactionNew = new Activities()
             {
+                //passing as a info for dispaly.
                 info = $"${amount} has been deposited at {DateTime.Now} balance is now ${this.Balance}."
             };
             this.addTransaction(transactionNew);
 
-
+            //this message will be display. 
             return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
         }
         /// <summary>
