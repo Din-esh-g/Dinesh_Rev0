@@ -11,6 +11,9 @@ namespace DInesh_Rav0
     public static class SelectionList
     {
         #region Welcome 
+        /// <summary>
+        /// This method will be load when program is load. 
+        /// </summary>
         public static void welcom()
         {
 
@@ -44,6 +47,11 @@ namespace DInesh_Rav0
 
         #endregion
         #region New User Registration
+        /// <summary>
+        /// This method will be called when user sucuessfully select the option from welecome method. 
+        /// this method will create new RegisteruserId.
+        /// this Id will be reqired to open the account and use the other option.
+        /// </summary>
         public static void userRegistration()
         {
             Console.WriteLine("==================================================\n");
@@ -53,7 +61,7 @@ namespace DInesh_Rav0
             string fname = Console.ReadLine();
             while (string.IsNullOrEmpty(fname) )
             {
-                Console.WriteLine("Umm It's Look Empty First name. ");
+                Console.WriteLine("Umm It's Look Empty First name. Please Enter again : ");
                 fname = Console.ReadLine();
             }
 
@@ -61,7 +69,7 @@ namespace DInesh_Rav0
             string lname = Console.ReadLine();
             while (string.IsNullOrEmpty(lname))
             {
-                Console.WriteLine("Umm It's Look Empty First name. ");
+                Console.WriteLine("Umm It's Look Empty Last name. Please Enter again . ");
                 lname = Console.ReadLine();
             }
 
@@ -69,11 +77,11 @@ namespace DInesh_Rav0
             string email = Validation.validEmail();
             while (string.IsNullOrEmpty(email))
             {
-                Console.WriteLine("Umm It's Look Empty ..????. ");
+                Console.WriteLine("Umm It's Look Empty ..????. Please Enter again. : ");
                 email = Console.ReadLine();
             }
 
-            Console.Write("Please enter your Phone Number (Without Area Code and Space: 123456789) :=>");
+            Console.Write("Please enter your Phone Number (Without Area Code and Space: 0123456789) :=>");
 
             //long phone = long.Parse(Console.ReadLine());
             long phone = Validation.validPhone();
@@ -109,6 +117,9 @@ namespace DInesh_Rav0
         }
         #endregion
         #region Avilablae selection option
+        /// <summary>
+        /// This is the regular menu for the customer who have valid account. 
+        /// </summary>
         public static void selectionList()
         {
 
@@ -141,9 +152,9 @@ namespace DInesh_Rav0
 
                     Console.WriteLine("\nPlease enter your Customer ID");
                     Console.Write("\n Your option? :=> ");
-                    int custId = Convert.ToInt32(Console.ReadLine());
-                    //int custId = getCustomerId();
-
+                   // int custId = Convert.ToInt32(Console.ReadLine());
+                    int custId =Validation.validUserId();
+                    //Providing the Option to the valid userID
                     Console.Write("\nWhat type of account would you like to open? \n \n =============================\n"
 
                                  + "1. Checking Account \n\n"
@@ -154,13 +165,13 @@ namespace DInesh_Rav0
 
                     Console.Write("\n Enter selection: :=> ");
                     string type = Console.ReadLine();
-
+                    //Checking the input ..........up correct input. 
                     while (string.IsNullOrEmpty(type) && (((type == "1") || (type == "2") || (type == "3") || (type == "4"))))
                     {
                         Console.WriteLine("Your Selection can't be empty! Input your selection once more");
                         type = Console.ReadLine();
                     }
-
+                    //Setting default to creat checking account. 
                     double rate = 0.00;
                     double balance = 0.00;
                     int period = 0;
@@ -182,7 +193,7 @@ namespace DInesh_Rav0
                             Balance = balance,
                             dateAndTime = dateAndTime
                         };
-
+                        // to incerment the account number. 
                         ListEnums.accntNumberChk++;
 
                         NewAccount newAcc = new NewAccount();
@@ -191,6 +202,7 @@ namespace DInesh_Rav0
 
 
                     }
+                    //Creating Business Account. 
                     else if (type == "2")
                     {
                         type = "Business";
@@ -211,6 +223,7 @@ namespace DInesh_Rav0
                         NewAccount newBusinessAcc = new NewAccount();
                         newBusinessAcc.CreateAccount(accountNew);
                     }
+                    //Creating Term Account. 
                     else if (type == "3")
                     {
                         type = "Term";
@@ -245,6 +258,7 @@ namespace DInesh_Rav0
 
 
                     }
+                    //Creating Loan Account. 
                     else if (type == "4")
                     {
                         type = "Loan";
@@ -285,21 +299,22 @@ namespace DInesh_Rav0
                     Console.WriteLine("What is your account number?");
                     int accountId = Validation.validAccountNumber();
 
+                    //Defining index for account
 
-
-                    int accountIndex = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(accountId));
-
+                    int Index = ListEnums.AccountList.FindIndex(a => a.accountNumber.Equals(accountId));
+                    //Validating user input 
                     Console.WriteLine("What is your Customer Id?");
                     int userInpuId = Validation.validUserId();
-                    if (userInpuId != ListEnums.AccountList[accountIndex].CustomerId)
+                    if (userInpuId != ListEnums.AccountList[Index].CustomerId)
                     {
                         Console.WriteLine($"\n Customer Id does not Match with this account number {accountId} . ");
                         Validation.displaySelection();
                     }
 
                     //chking types here
-                    var toAccountTypeofMainAccount = ListEnums.AccountList[accountIndex].type;
+                    var toAccountTypeofMainAccount = ListEnums.AccountList[Index].type;
 
+                    //Display the menu with valid user and valid account. 
                     Console.Write("\nWhat type of transaction would you like to make? \n \n"
                                     + "1. Withdrawl \n"
                                     + "2. Deposit \n"
@@ -316,31 +331,40 @@ namespace DInesh_Rav0
 
                     string transType = Console.ReadLine();
 
+                    //Withdrawl
                     if (transType == "1")
                     {
 
                         Console.Write("Withdraw Amount: => $ ");
                         double amt = Validation.validAmtInput();
 
-                        var accountType = ListEnums.AccountList[accountIndex].type;
+                        var accountType = ListEnums.AccountList[Index].type;
+
+                        //Withdrawl from checking 
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[accountIndex];
+                            accountNew = (Checking)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amt));
                             Validation.displaySelection();
 
 
                         }
+                        
+                        //Withdrawl from Business
+
                         else if (accountType == "Business")
                         {
                             Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[accountIndex];
+                            accountNew = (Business)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amt));
                             Validation.displaySelection();
 
 
                         }
+
+                        //Withdrawl from Term Account
+
                         else if (accountType == "Term")
                         {
                             //check the date
@@ -350,7 +374,7 @@ namespace DInesh_Rav0
                                 if ((Validation.MonthDifference(DateTime.Now, item.dateAndTime) > item.period)) {
 
                                     TermDeposit accountNew = new TermDeposit();
-                                    accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                                    accountNew = (TermDeposit)ListEnums.AccountList[Index];
                                     Console.WriteLine(accountNew.withdraw(amt));
                                     Validation.displaySelection();
                                 }
@@ -360,55 +384,64 @@ namespace DInesh_Rav0
                                 }
                             }
                         }
+                        //
+                        //Withdrawl from Loan
+
                         else if (accountType == "Loan")
                         {
                             Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            accountNew = (Loan)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amt));
                             Validation.displaySelection();
                         }
                     }
 
-
+                    //This else if part will be called when user want's to deposit
                     else if (transType == "2")
                     {
 
                         Console.WriteLine("Deposit Amount: ");
-                        var accountType = ListEnums.AccountList[accountIndex].type;
+                        var accountType = ListEnums.AccountList[Index].type;
                         double amount = Validation.validAmtInput();
+
+                        //Deposit for Checking. 
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[accountIndex];
+                            accountNew = (Checking)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.deposit(amount));
                             Validation.displaySelection();
 
                         }
+                        //Deposit for Business
                         else if (accountType == "Business")
                         {
                             Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[accountIndex];
+                            accountNew = (Business)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.deposit(amount));
                             Validation.displaySelection();
 
 
                         }
+                        //Deposit for Term Account
                         else if (accountType == "Term")
                         {
                             TermDeposit accountNew = new TermDeposit();
-                            accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                            accountNew = (TermDeposit)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.deposit(amount));
                             Validation.displaySelection();
 
                         }
+                        //Deposit for Loan
                         else if (accountType == "Loan")
                         {
                             Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            accountNew = (Loan)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.deposit(amount));
                             Validation.displaySelection();
                         }
                     }
+                    //This else if will work with Transfer. 
                     else if (transType == "3")
                     {
 
@@ -426,13 +459,14 @@ namespace DInesh_Rav0
 
                         Console.Write("\nTransfer Amount : => $ \n");
                         double amount = Validation.validAmtInput();
+                        // From Cheking 
 
                         if (toAccountTypeofMainAccount == "Checking")
                         {
                             Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[accountIndex];
+                            accountNew = (Checking)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amount));
-
+                            //checking
                             if (toAccountType == "Checking")
                             {
                                 Checking toAccountNew = new Checking();
@@ -441,6 +475,7 @@ namespace DInesh_Rav0
                                 SelectionList.selectionList();
 
                             }
+                            //Business
                             else if (toAccountType == "Business")
                             {
                                 Business toAccountNew = new Business();
@@ -448,6 +483,7 @@ namespace DInesh_Rav0
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
+                            //Loan
                             else if (toAccountType == "Loan")
                             {
                                 Loan toAccountNew = new Loan();
@@ -462,12 +498,13 @@ namespace DInesh_Rav0
                             }
 
                         }
+                        //From Business. 
                         else if (toAccountTypeofMainAccount == "Business")
                         {
                             Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[accountIndex];
+                            accountNew = (Business)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amount));
-
+                            // TO checking
                             if (toAccountType == "Checking")
                             {
                                 Checking toAccountNew = new Checking();
@@ -475,6 +512,7 @@ namespace DInesh_Rav0
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
+                            //To Business
                             else if (toAccountType == "Business")
                             {
                                 Business toAccountNew = new Business();
@@ -482,6 +520,7 @@ namespace DInesh_Rav0
                                 Console.WriteLine(toAccountNew.deposit(amount));
                                 SelectionList.selectionList();
                             }
+                            //To Loan
                             else if (toAccountType == "Loan")
                             {
                                 Loan toAccountNew = new Loan();
@@ -500,7 +539,7 @@ namespace DInesh_Rav0
                         else if (toAccountTypeofMainAccount == "Loan")
                         {
                             Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            accountNew = (Loan)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.withdraw(amount));
 
                             if (toAccountType == "Checking")
@@ -546,7 +585,7 @@ namespace DInesh_Rav0
                                 {
 
                                     TermDeposit accountNew = new TermDeposit();
-                                    accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                                    accountNew = (TermDeposit)ListEnums.AccountList[Index];
                                     Console.WriteLine(accountNew.withdraw(amount));
 
                                     if (toAccountType == "Checking")
@@ -592,21 +631,22 @@ namespace DInesh_Rav0
 
 
                     }
+                    //Display the balance
                     else if (transType == "4")
                     {
 
-                        var currentBalance = ListEnums.AccountList[accountIndex].Balance;
+                        var currentBalance = ListEnums.AccountList[Index].Balance;
                         Console.WriteLine($"Your account balance is:  $ {currentBalance}");
                         SelectionList.selectionList();
 
                     }
                     else if (transType == "5")
                     {
-                        var accountType = ListEnums.AccountList[accountIndex].type;
+                        var accountType = ListEnums.AccountList[Index].type;
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[accountIndex];
+                            accountNew = (Checking)ListEnums.AccountList[Index];
                             foreach (Activities item in accountNew.getLog())
                             {
                                 Console.WriteLine(item.info);
@@ -617,7 +657,7 @@ namespace DInesh_Rav0
                         else if (accountType == "Business")
                         {
                             Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[accountIndex];
+                            accountNew = (Business)ListEnums.AccountList[Index];
                             foreach (Activities item in accountNew.getLog())
                             {
                                 Console.WriteLine(item.info);
@@ -629,7 +669,7 @@ namespace DInesh_Rav0
                         else if (accountType == "Term")
                         {
                             TermDeposit accountNew = new TermDeposit();
-                            accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                            accountNew = (TermDeposit)ListEnums.AccountList[Index];
                             foreach (Activities item in accountNew.getLog())
                             {
                                 Console.WriteLine(item.info);
@@ -640,7 +680,7 @@ namespace DInesh_Rav0
                         else if (accountType == "Loan")
                         {
                             Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            accountNew = (Loan)ListEnums.AccountList[Index];
                             foreach (Activities item in accountNew.getLog())
                             {
                                 Console.WriteLine(item.info);
@@ -654,9 +694,9 @@ namespace DInesh_Rav0
                         foreach (IAccount item in ListEnums.AccountList)
                         {
 
-                            if (!Validation.checkBalance((accountIndex)))
+                            if (!Validation.checkBalance((Index)))
                             {
-                                ListEnums.AccountList.RemoveAt(accountIndex);
+                                ListEnums.AccountList.RemoveAt(Index);
                                 Console.WriteLine($"\nYou're account {item.accountNumber} has been deleted Sucessfully.\n ");
                                 SelectionList.selectionList();
                             }
@@ -679,12 +719,12 @@ namespace DInesh_Rav0
             
                     else if (transType == "8")
                     {
-                        var accountType = ListEnums.AccountList[accountIndex].type;
+                        var accountType = ListEnums.AccountList[Index].type;
 
                         if (accountType == "Checking")
                         {
                             Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[accountIndex];
+                            accountNew = (Checking)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.intrest(DateTime.Now));
                             
                             Validation.displaySelection();
@@ -694,7 +734,7 @@ namespace DInesh_Rav0
                         else if (accountType == "Business")
                         {
                             Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[accountIndex];
+                            accountNew = (Business)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.intrest(DateTime.Now));
                              Validation.displaySelection();
 
@@ -710,7 +750,7 @@ namespace DInesh_Rav0
                                 {
 
                                     TermDeposit accountNew = new TermDeposit();
-                                    accountNew = (TermDeposit)ListEnums.AccountList[accountIndex];
+                                    accountNew = (TermDeposit)ListEnums.AccountList[Index];
                                     Console.WriteLine(accountNew.intrest(DateTime.Now));
                                     Validation.displaySelection();
                                 }
@@ -723,7 +763,7 @@ namespace DInesh_Rav0
                         else if (accountType == "Loan")
                         {
                             Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[accountIndex];
+                            accountNew = (Loan)ListEnums.AccountList[Index];
                             Console.WriteLine(accountNew.intrest(DateTime.Now));
                             Validation.displaySelection();
                         }
@@ -762,7 +802,7 @@ namespace DInesh_Rav0
                         Validation.displaySelection();
                     }
                     
-
+                    //Exit From program
                     break;
                 case "5":
                     Console.WriteLine(  " \n\n\n Thank you For Using ! .......................\n");
@@ -777,334 +817,6 @@ namespace DInesh_Rav0
         }
 
         #endregion
-
-       // #region Validation and verification
-       // /// <summary>
-       // /// 
-       // /// </summary>
-       // /// <param name="toAccount"></param>
-       // /// <returns></returns>
-
-       // public static int MonthDifference(this DateTime lValue, DateTime rValue)
-       // {
-       //     return Math.Abs((lValue.Month - rValue.Month) + 12 * (lValue.Year - rValue.Year));
-       // }
-
-       // private static bool accountIdValidation(int toAccount)
-       //     {
-       //         bool found = false;
-
-       //         foreach (IAccount item in ListEnums.AccountList)
-       //         {
-       //             if (item.accountNumber == toAccount)
-       //             {
-       //                 found = true;
-       //             }
-       //         }
-
-       //         return found;
-       //     }
-       // /// <summary>
-       // /// 
-       // /// </summary>
-       // /// <param name="sts"></param>
-       // /// <returns>Status True or False</returns>
-       // private static bool statusCheck()
-       // {
-            
-       //     bool found = false;
-
-       //     foreach (IAccount item in ListEnums.AccountList)
-       //     {
-       //         if (item.status == true)
-       //         {
-       //             found = true;
-       //         }
-       //     }
-
-       //     return found;
-       // }
-
-       // //public static void transferInfo()
-       // //{
-       // //     try
-       // //        {
-       // //           if (SelectionList.checkBalance()
-       // //        }
-       // //        catch
-       // //        {
-                   
-       // //        }
-                     
-
-       // //}
-
-        
-       // private static bool checkBalance(int account)
-       // {
-       //     bool found = false;
-
-       //     foreach (IAccount item in ListEnums.AccountList)
-       //     {
-       //         if (item.Balance > 0)
-       //         {
-       //             found = true;
-       //         }
-       //     }
-
-       //     return found;
-
-       // }
-
-       //     /// <summary>
-       //     /// This will show the selection list to the users. 
-       //     /// </summary>
-
-       //     private static void displaySelection()
-       //     {
-       //         Console.WriteLine("Please press enter to return to the main menu");
-       //         Console.ReadLine();
-       //         SelectionList.selectionList();
-       //     }
-       //     /// <summary>
-       //     /// This Method is print the user friendly Message to where to procede. 
-       //     /// </summary>
-       //     public static void notAvilable()
-       //     {
-       //         Console.WriteLine("\n\n***********Selection is not Found************\n");
-       //         Console.WriteLine("Please press enter to return to the main menu");
-       //         SelectionList.selectionList();
-
-       //     }
-       //     /// <summary>
-       //     /// /
-       //     /// </summary>
-       //     /// <returns>Valid Amount . Amount in Double.  </returns>
-       //    public static double validAmtInput()
-       //     {
-
-       //         try
-       //         {
-       //             double amount = Convert.ToInt32(Console.ReadLine());
-
-       //             return amount;
-       //         }
-       //         catch
-       //         {
-       //             SelectionList.notAvilable();
-       //             return 0;
-       //         }
-       //     }
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <returns>Valid Account Number</returns>
-       //     public static int validAccountNumber()
-       //     {
-       //         try
-       //         {
-       //             int accountId = Convert.ToInt32(Console.ReadLine());
-       //             if (!SelectionList.validAccountNumbers(accountId))
-       //             {
-       //                 Console.WriteLine("\n\n *************No Account Found***********\n.");
-       //                 Console.WriteLine("Please press enter to return to the main menu");
-       //                 Console.ReadLine();
-       //                 SelectionList.selectionList();
-       //             }
-       //             return accountId;
-       //         }
-       //         catch
-       //         {
-       //             notAvilable();
-       //             return 0;
-       //         }
-       //     }
-       //     /// <summary>
-       //     /// /
-       //     /// </summary>
-       //     /// <returns>Valid User ID</returns>
-       //     public static int validUserId()
-       //     {
-       //         try
-       //         {
-       //          string custId = (Console.ReadLine());
-       //         int intCust = Convert.ToInt32(custId);
-
-       //         while (string.IsNullOrEmpty(custId))
-       //         {
-       //             Console.WriteLine("Your Selection can't be empty! Input your selection once more");
-       //             custId =(Console.ReadLine());
-       //         }
-
-
-       //         if (!SelectionList.customerIdValidation(intCust))
-       //             {
-       //                 Console.WriteLine("\n\n***********No User Found.*************\n");
-       //                 displaySelection();
-       //             }
-       //             return intCust;
-       //         }
-       //         catch
-       //         {
-       //             Console.WriteLine("That was not a valid customer Id");
-
-       //             SelectionList.selectionList();
-       //             return 0;
-       //         }
-       //     }
-
-
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <param name="telNo"></param>
-       //     /// <returns></returns>
-       //     public static bool validTelephoneNo(string telNo)
-       //     {
-
-       //         Regex r = new Regex("^[0-9]{9}$");
-       //         if (r.IsMatch(telNo))
-       //         {
-       //             return false;
-       //         }
-
-       //         return true;
-       //     }
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <param name=" registerUserId"></param>
-       //     /// <returns></returns>
-       //     public static bool customerIdValidation(int registerUserId)
-       //     {
-       //         bool found = false;
-
-       //         foreach (RegisterUser item in ListEnums.CustomerList)
-       //         {
-       //             if (item.Id == registerUserId)
-       //             {
-       //                 found = true;
-       //             }
-       //         }
-
-       //         return found;
-       //     }
-
-
-       //     //
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <param name="toAccount"></param>
-       //     /// <returns></returns>
-       //     private static bool validAccountNumbers(int toAccount)
-       //     {
-       //         bool found = false;
-
-       //         foreach (IAccount item in ListEnums.AccountList)
-       //         {
-       //             if (item.accountNumber == toAccount)
-       //             {
-       //                 found = true;
-       //             }
-       //         }
-
-       //         return found;
-       //     }
-
-
-
-
-
-
-
-
-
-
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <returns></returns>
-       //     public static string validEmail()
-       //     {
-       //         string email = Console.ReadLine();
-       //         try
-       //         {
-       //             if (!IsEmailSyntaxValid(email))
-       //             {
-       //                 Console.WriteLine("\n\n******That was not a valid Email*********** \n");
-       //                 SelectionList.userRegistration();
-       //             }
-       //             return email;
-
-       //         }
-       //         catch
-       //         {
-       //             Console.WriteLine("\n\n******That was not a valid Email*********** \n");
-       //             SelectionList.userRegistration();
-       //             return null;
-       //         }
-       //     }
-
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <returns></returns>
-       //    public static long validPhone()
-       //     {
-       //         var phone = (Console.ReadLine());
-       //         try
-       //         {
-       //             if (!validTelephoneNo(phone))
-       //             {
-       //                 Console.WriteLine("\n\n******* Ummm Phone Number doesnot look correct.  !!******** \n ");
-       //                 SelectionList.userRegistration();
-       //             }
-       //             return long.Parse(phone);
-
-       //         }
-       //         catch
-       //         {
-       //             Console.WriteLine("\n\n******* Ummm Phone Number doesnot look correct.  !! \n ");
-       //             SelectionList.userRegistration();
-       //             return 0;
-       //         }
-       //     }
-
-
-       //     /// <summary>
-       //     /// 
-       //     /// </summary>
-       //     /// <param name="emailToValidate"></param>
-       //     /// <returns></returns>
-       //     public  static bool IsEmailSyntaxValid(string emailToValidate)
-       //     {
-       //         return System.Text.RegularExpressions.Regex.IsMatch(emailToValidate,
-       //             @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
-       //     }
-       //public  static double interestCalulation()
-       // {
-       //     double interest = 0;
-       //      foreach (IAccount item in ListEnums.AccountList)
-       //         {
-
-       //         interest = item.Balance * item.InterestRate * item.period;
-       //     }
-       //     return interest;
-       // }
-       // public static double interestForOtherAccount()
-       // {
-       //     double interest = 0;
-       //     foreach (IAccount item in ListEnums.AccountList)
-       //     {
-       //         interest = (item.Balance * (MonthDifference(DateTime.Now,item.dateAndTime)/12) * item.InterestRate) / 100;
-       //     }
-       //     return interest;
-       // }
-            
-
-
-       //     #endregion
 
 
 

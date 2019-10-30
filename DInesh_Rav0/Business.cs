@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DInesh_Rav0
 {
+    /// <summary>
+    /// This class will implement the interface of IAccount 
+    /// </summary>
     public class Business:IAccount
     {
         public DateTime dateAndTime { get; set; }
@@ -16,14 +19,23 @@ namespace DInesh_Rav0
         public DateTime createdAt { get; set; }
         public bool status { get; set; }
      
-
+        /// <summary>
+        /// Creating a list which will be adeed all the transaction.
+        /// </summary>
         public List<Activities> transactionList = new List<Activities>();
-
+        /// <summary>
+        /// This method will added the transaction in to transaction list. 
+        /// </summary>
+        /// <param name="transactionNew"></param>
         public void addTransaction(Activities transactionNew)
         {
             this.transactionList.Add(transactionNew);
         }
-
+        /// <summary>
+        /// /it will returns message of withdraw sucess and new balance.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>new balnce </returns>
         public string withdraw(double amount)
         {
             if (this.Balance > amount)
@@ -44,6 +56,11 @@ namespace DInesh_Rav0
 
         }
 
+        /// <summary>
+        /// This method will deposited in Business account and return the message with new balance. 
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>new balance after deposit. </returns>
         public string deposit(double amount)
         {
 
@@ -58,7 +75,11 @@ namespace DInesh_Rav0
             return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
 
         }
-
+        /// <summary>
+        /// This method will calculate a interest based on date and return new balance message. 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>New Balnce with after interest added. </returns>
         public string intrest(DateTime date)
         {
             if (this.status == true)
@@ -82,7 +103,7 @@ namespace DInesh_Rav0
         }
 
 
-
+        //This is the create log. 
 
         public List<Activities> getLog()
         {

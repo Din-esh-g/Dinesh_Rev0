@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DInesh_Rav0
 {
+    /// <summary>
+    /// This is the implementation of the IAccounts as per loan account e
+    /// </summary>
     public class Loan : IAccount
     {
         public DateTime dateAndTime { get; set; }
@@ -15,14 +18,24 @@ namespace DInesh_Rav0
         public double Balance { get; set; }
         public DateTime createdAt { get; set; }
         public bool status { get; set; }
+        /// <summary>
+        /// List to hold all the relvent activities of Loan account 
+        /// </summary>
 
         public List<Activities> transactionList = new List<Activities>();
-
+        /// <summary>
+        /// This method will add the all the transaction in the transactionList
+        /// </summary>
+        /// <param name="transactionNew"></param>
         public void addTransaction(Activities transactionNew)
         {
             this.transactionList.Add(transactionNew);
         }
-
+        /// <summary>
+        /// This method will call when user try to withdraw the amount from loan account.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>newBalance </returns>
         public string withdraw(double amount)
         {
             if (this.Balance > amount)
@@ -42,7 +55,11 @@ namespace DInesh_Rav0
             }
 
         }
-
+        /// <summary>
+        /// This method will call when user try to deposited. the amount from loan account.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>newbalance w</returns>
         public string deposit(double amount)
         {
 
@@ -57,7 +74,11 @@ namespace DInesh_Rav0
             return $"You have deposited ${amount} into account number {this.accountNumber}. Your balance is now ${this.Balance}.";
 
         }
-
+        /// <summary>
+        /// This method will call when the interest need to calculate. 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>new balance after interst. </returns>
         public string intrest(DateTime date)
         {
                  date = DateTime.Now;
@@ -82,7 +103,10 @@ namespace DInesh_Rav0
 
         }
 
-
+        /// <summary>
+        /// This is the method to getLog.
+        /// </summary>
+        /// <returns></returns>
         public List<Activities> getLog()
         {
             return this.transactionList;

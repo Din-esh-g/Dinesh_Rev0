@@ -9,6 +9,10 @@ namespace DInesh_Rav0
 {
     public class NewUser
     {
+        /// <summary>
+        /// This will create new customer and displayed in Table.
+        /// </summary>
+        /// <param name="newCustomer"></param>
         public void Create(RegisterUser newCustomer)
         {
             ListEnums.CustomerList.Add(newCustomer);

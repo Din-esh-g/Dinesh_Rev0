@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DInesh_Rav0
 {
+    /// <summary>
+    /// This class will implement the interface of IAccount 
+    /// </summary>
     public class Checking:IAccount
     {
         public int period { get; set; }
@@ -15,13 +18,22 @@ namespace DInesh_Rav0
         public double Balance { get; set; }
         public DateTime createdAt { get; set; }
         public bool status { get; set; }
+        //Defining the list for the tansaction which will be in this account.
 
         public List<Activities> transactionList = new List<Activities>();
-
+        /// <summary>
+        /// This will add the every new transaction in our transactionList.
+        /// </summary>
+        /// <param name="transactionNew"></param>
         public void addTransaction(Activities transactionNew)
         {
             this.transactionList.Add(transactionNew);
         }
+        /// <summary>
+        /// Implementing withdraw
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>it will returns message of withdraw secuess and new balance. </returns>
 
         public string withdraw(double amount)
         {
@@ -42,6 +54,11 @@ namespace DInesh_Rav0
             }
 
         }
+        /// <summary>
+        /// This method is depositing the amount we passed and it will return the new balance.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>new balance of with deposited amt</returns>
 
         public string deposit(double amount)
         {
@@ -57,6 +74,11 @@ namespace DInesh_Rav0
             return $" \nDeposied Amount: ${amount} || Date:  {DateTime.Now} || Current Balance: $ {this.Balance}.";
 
         }
+        /// <summary>
+        /// This method will calculate interst and added to the balance
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns> new balance after adding the interest. </returns>
 
         public string intrest(DateTime date)
         {
@@ -80,7 +102,7 @@ namespace DInesh_Rav0
 
         }
 
-
+        //This will getlog
         public List<Activities> getLog()
         {
             return this.transactionList;

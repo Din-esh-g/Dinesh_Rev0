@@ -7,6 +7,11 @@ namespace DInesh_Rav0
 {
    public class NewAccount
     {
+        /// <summary>
+        /// This method will generate new account
+        /// The out put will be in table.
+        /// </summary>
+        /// <param name="accountNew"></param>
         public void CreateAccount(IAccount accountNew)
 
         {

@@ -2,9 +2,10 @@
 
 namespace DInesh_Rav0
 {
-    class Program
+   public class Program
     {
-        static void Main(string[] args)
+        //Main Method  Calling the welcome method from selectionList.
+       public static void Main(string[] args)
         {
             Console.WriteLine("\n\n**********************************************************************\n");
             Console.WriteLine("*********************Application is ready to use**********************");

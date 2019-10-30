@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace DInesh_Rav0
 {
+    // This class is all about validating the user input. 
     public static class Validation
     {
 
@@ -57,20 +58,12 @@ namespace DInesh_Rav0
             return found;
         }
 
-        //public static void transferInfo()
-        //{
-        //     try
-        //        {
-        //           if (SelectionList.checkBalance()
-        //        }
-        //        catch
-        //        {
 
-        //        }
-
-
-        //}
-
+        /// <summary>
+        /// Balance verificaation
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
 
         public static bool checkBalance(int account)
         {
@@ -245,15 +238,7 @@ namespace DInesh_Rav0
         }
 
 
-
-
-
-
-
-
-
-
-        /// <summary>
+ ///<summary>
         /// 
         /// </summary>
         /// <returns></returns>
@@ -324,6 +309,10 @@ namespace DInesh_Rav0
             }
             return interest;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Interest Amt For year</returns>
         public static double interestForOtherAccount()
         {
             double interest = 0;

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DInesh_Rav0
 {
+    /// <summary>
+    /// This is the interface which will be implemented by all the accounts we have. 
+    /// </summary>
     public interface IAccount
     {
         string type { get; set; }
@@ -16,13 +19,14 @@ namespace DInesh_Rav0
         DateTime dateAndTime { get; set; }
 
 
-
+        //This method will add the new transaction in list
 
         void addTransaction(Activities transactionNew);
-
+        // withdraw transaction
         string withdraw(double amount);
-
+        //deposit transaction
         string deposit(double amount);
+        //for interest 
         string intrest(DateTime date);
 
 
