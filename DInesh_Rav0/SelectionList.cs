@@ -21,8 +21,9 @@ namespace DInesh_Rav0
 
 
             Console.WriteLine("\tc - Do you want to continue with Registration ");
-
+            Console.WriteLine("\te - Already have Registered User ID. ");
             Console.WriteLine("\te - Exit from application. ");
+            
 
             Console.Write("Your option? : => ");
             string optiono = Console.ReadLine();
@@ -35,6 +36,11 @@ namespace DInesh_Rav0
             if (optiono == "c")
             {
                 userRegistration();
+            }
+            else if (optiono == "e")
+            {
+                selectionList();
+
             }
             else if (optiono == "e")
             {
@@ -316,8 +322,8 @@ namespace DInesh_Rav0
 
                     //Display the menu with valid user and valid account. 
                     Console.Write("\nWhat type of transaction would you like to make? \n \n"
-                                    + "1. Withdrawl \n"
-                                    + "2. Deposit \n"
+                                    + "1. Deposit \n"
+                                    + "2. Withdrawl \n"
                                     + "3. Transfer Funds \n"
                                     + "4. Look up Account Balance\n"
                                     + "5. Look up  the transaction\n"
@@ -331,8 +337,56 @@ namespace DInesh_Rav0
 
                     string transType = Console.ReadLine();
 
-                    //Withdrawl
+
+                    //This else if part will be called when user want's to deposit
                     if (transType == "1")
+                    {
+
+                        Console.WriteLine("Deposit Amount: ");
+                        var accountType = ListEnums.AccountList[Index].type;
+                        double amount = Validation.validAmtInput();
+
+                        //Deposit for Checking. 
+                        if (accountType == "Checking")
+                        {
+                            Checking accountNew = new Checking();
+                            accountNew = (Checking)ListEnums.AccountList[Index];
+                            Console.WriteLine(accountNew.deposit(amount));
+                            Validation.displaySelection();
+
+                        }
+                        //Deposit for Business
+                        else if (accountType == "Business")
+                        {
+                            Business accountNew = new Business();
+                            accountNew = (Business)ListEnums.AccountList[Index];
+                            Console.WriteLine(accountNew.deposit(amount));
+                            Validation.displaySelection();
+
+
+                        }
+                        //Deposit for Term Account
+                        else if (accountType == "Term")
+                        {
+                            TermDeposit accountNew = new TermDeposit();
+                            accountNew = (TermDeposit)ListEnums.AccountList[Index];
+                            Console.WriteLine(accountNew.deposit(amount));
+                            Validation.displaySelection();
+
+                        }
+                        //Deposit for Loan
+                        else if (accountType == "Loan")
+                        {
+                            Loan accountNew = new Loan();
+                            accountNew = (Loan)ListEnums.AccountList[Index];
+                            Console.WriteLine(accountNew.deposit(amount));
+                            Validation.displaySelection();
+                        }
+                    }
+
+
+                    //Withdrawl Part
+                    else if (transType == "2")
                     {
 
                         Console.Write("Withdraw Amount: => $ ");
@@ -396,51 +450,7 @@ namespace DInesh_Rav0
                         }
                     }
 
-                    //This else if part will be called when user want's to deposit
-                    else if (transType == "2")
-                    {
-
-                        Console.WriteLine("Deposit Amount: ");
-                        var accountType = ListEnums.AccountList[Index].type;
-                        double amount = Validation.validAmtInput();
-
-                        //Deposit for Checking. 
-                        if (accountType == "Checking")
-                        {
-                            Checking accountNew = new Checking();
-                            accountNew = (Checking)ListEnums.AccountList[Index];
-                            Console.WriteLine(accountNew.deposit(amount));
-                            Validation.displaySelection();
-
-                        }
-                        //Deposit for Business
-                        else if (accountType == "Business")
-                        {
-                            Business accountNew = new Business();
-                            accountNew = (Business)ListEnums.AccountList[Index];
-                            Console.WriteLine(accountNew.deposit(amount));
-                            Validation.displaySelection();
-
-
-                        }
-                        //Deposit for Term Account
-                        else if (accountType == "Term")
-                        {
-                            TermDeposit accountNew = new TermDeposit();
-                            accountNew = (TermDeposit)ListEnums.AccountList[Index];
-                            Console.WriteLine(accountNew.deposit(amount));
-                            Validation.displaySelection();
-
-                        }
-                        //Deposit for Loan
-                        else if (accountType == "Loan")
-                        {
-                            Loan accountNew = new Loan();
-                            accountNew = (Loan)ListEnums.AccountList[Index];
-                            Console.WriteLine(accountNew.deposit(amount));
-                            Validation.displaySelection();
-                        }
-                    }
+                    
                     //This else if will work with Transfer. 
                     else if (transType == "3")
                     {
@@ -640,6 +650,7 @@ namespace DInesh_Rav0
                         SelectionList.selectionList();
 
                     }
+                    //Look up  the transaction
                     else if (transType == "5")
                     {
                         var accountType = ListEnums.AccountList[Index].type;
@@ -689,6 +700,7 @@ namespace DInesh_Rav0
                         }
 
                     }
+                    //Closed Account
                     else if (transType == "6")
                     {
                         foreach (IAccount item in ListEnums.AccountList)
@@ -769,9 +781,7 @@ namespace DInesh_Rav0
                         }
                     }
 
-
-
-                                       
+                                                                             
 
                         break;
                 case "4":

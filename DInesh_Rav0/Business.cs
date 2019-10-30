@@ -33,21 +33,22 @@ namespace DInesh_Rav0
         }
         /// <summary>
         /// /it will returns message of withdraw sucess and new balance.
+        /// There is limit of $ 5000 can be withdraw. 
         /// </summary>
         /// <param name="amount"></param>
         /// <returns>new balnce </returns>
         public string withdraw(double amount)
         {
-            if (this.Balance > amount)
+            if (this.Balance + 5000 > amount)
             {
                 this.Balance = this.Balance - amount;
                 Activities transactionNew = new Activities()
                 {
-                    info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}."
+                    info = $"${amount} has been withdrawn at {DateTime.Now} balance is now ${this.Balance}. (Note: You have $5000 Credit Limits.)"
                 };
                 this.addTransaction(transactionNew);
 
-                return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}.";
+                return $"You withdrew ${amount} from account number {this.accountNumber}. Your balance is now ${this.Balance}. (Note: You have $5000 Credit Limits.)";
             }
             else
             {
